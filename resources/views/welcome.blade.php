@@ -3,13 +3,33 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Open Book</title>
+    <title>BOOKIE</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#03a6f3">
-    <link rel="stylesheet" href="book-store/css/bootstrap.min.css">
-    <link href="https://fonts.googleapis.com/css?family=Montserrat:200,300,400,500,600,700,800,900" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" type="text/css" href="book-store/css/owl.carousel.min.css">
+    <link href='https://fonts.googleapis.com/css?family=Sofia' rel='stylesheet'>
+    
+   
+    <link rel="shortcut icon" type="image/icon" href="kindle-master/assets/images/favicon.ico"/>
+    <!-- Font Awesome -->
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+    <!-- Bootstrap -->
+    <link href="kindle-master/assets/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Slick slider -->
+    <link href="kindle-master/assets/css/slick.css" rel="stylesheet">
+    <!-- Theme color -->
+    <link id="switcher" href="kindle-master/assets/css/theme-color/default-theme.css" rel="stylesheet">
+
+    <!-- Main Style -->
+    <link href="kindle-master/style.css" rel="stylesheet">
+
+    <!-- Fonts -->
+
+    <!-- Open Sans for body font -->
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,400i,600,700,800" rel="stylesheet">
+    <!-- Lato for Title -->
+  	<link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet"> 
+
+   
     <link rel="stylesheet" href="book-store/css/styles.css">
     <link rel="stylesheet" type="text/css" href="fash/vendor/bootstrap/css/bootstrap.min.css">
     <!--===============================================================================================-->
@@ -39,7 +59,83 @@
     <link rel="stylesheet" type="text/css" href="fash/css/main.css">
     <link rel="stylesheet" type="text/css" href="book-store/css/owl.carousel.min.css">
 
+<style>
+html{scroll-behavior: smooth;}
+footer{
+    position: relative
+}
+#scroll {
+    position:absolute;
+    right:10px;
+    bottom:50px;
+    cursor:pointer;
+    width:50px;
+    height:50px;
+    background-color:#3498db;
+    text-indent:-9999px;
+    /* display:none; */
+    -webkit-border-radius:60px;
+    -moz-border-radius:60px;
+    border-radius:60px
+}
+#scroll span {
+    position:absolute;
+    top:50%;
+    left:50%;
+    margin-left:-8px;
+    margin-top:-12px;
+    height:0;
+    width:0;
+    border:8px solid transparent;
+    border-bottom-color:#ffffff;
+}
+#scroll:hover {
+    background-color:#e74c3c;
+    opacity:1;filter:"alpha(opacity=100)";
+    -ms-filter:"alpha(opacity=100)";
+}
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+  // Add smooth scrolling to all links
+  $(".about").on('click', function(event) {
 
+    // Make sure this.hash has a value before overriding default behavior
+    if (this.hash !== "") {
+      // Prevent default anchor click behavior
+      event.preventDefault();
+
+      // Store hash
+      var hash = this.hash;
+
+      // Using jQuery's animate() method to add smooth page scroll
+      // The optional number (800) specifies the number of milliseconds it takes to scroll to the specified area
+      $('html, body').animate({
+        scrollTop: $(hash).offset().top
+      }, 800, function(){
+   
+        // Add hash (#) to URL when done scrolling (default click behavior)
+        window.location.hash = hash;
+      });
+    } // End if
+  });
+
+  $(window).scroll(function(){ 
+        if ($(this).scrollTop() > 100) { 
+            $('#scroll').fadeIn(); 
+        } else { 
+            $('#scroll').fadeOut(); 
+        } 
+    }); 
+
+  $('#scroll').click(function(){ 
+        $("html, body").animate({ scrollTop: 0 }, 600); 
+        return false; 
+    }); 
+
+});
+</script>
 
 </head>
 
@@ -48,8 +144,8 @@
        
         <div class="main-menu fixed-top p-1" style="background: rgba(255,255,255,1)">
             <div class="container">
-                <nav class="navbar navbar-expand-lg navbar-light">
-                <a class="navbar-brand ml-md-2 mt-2" href="index.html" style="font-size: 30px;font-weight:bold ; color:#074985"> <img src="{{asset('images/student.png')}}" style="vertical-align: middle;width: 40px; height: 40px; display:inline-block" class="mb-3" alt="" srcset=""> BOOKIE</a>
+                <nav class="navbar navbar-expand-lg navbar-light mb-2">
+                <a class="navbar-brand ml-md-2 mt-2" href="index.html" style="font-size: 30px;font-weight:bold ; color:#074985; font-family:'Sofia'"> <img src="{{asset('images/student.png')}}" style="vertical-align: middle;width: 40px; height: 40px; display:inline-block" class="mb-3" alt="" srcset=""> BOOKIE</a>
 
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
@@ -60,16 +156,20 @@
                             @auth
                             <li class="navbar-item active">
 
-                                <a href="{{ url('/home') }}" class="nav-link">{{__('Home')}}</a>
+ @if(auth()->user()->hasRole('admin'))
+                                <a href="{{ url('/admin') }}" class="nav-link">Home</a>
+                                @else
+                                <a href="{{ url('/home') }}" class="nav-link">Home</a>
+                                @endif
                             </li>
                             @else
                             <li class="navbar-item">
-                                <a href="{{ route('login') }}" class="nav-link">{{__('Login')}}</a>
+                                <a href="{{ route('login') }}" class="nav-link">Login</a>
                             </li>
                             @if (Route::has('register'))
                             <li class="navbar-item">
 
-                                <a href="{{ route('register') }}" class="nav-link">{{__('Register')}}</a>
+                                <a href="{{ route('register') }}" class="nav-link">Register</a>
 
                             </li>
                             @endif
@@ -79,26 +179,19 @@
 
 
                             <li class="navbar-item">
-                                <a href="{{ url('/home') }}" class="nav-link">{{__('Shop')}}</a>
+                                <a href="{{ url('/home') }}" class="nav-link">Shop</a>
                             </li>
                             <li class="navbar-item">
-                                <a href="about.html" class="nav-link">{{__('About')}}</a>
+                                <a href="#mu-testimonials" class="nav-link about">About</a>
                             </li>
-                            <li class="navbar-item">
-                                <a href="faq.html" class="nav-link">{{__('FAQ')}}</a>
-                            </li>
+                           
 
                         </ul>
 
-                        <a href="{{ route('cart.show')}}" class="cart my-2 my-lg-0" style="color: black">
-                            <span>
-                                <i class="fa fa-shopping-cart" aria-hidden="true"></i>
-                            </span>
-                            <span class="quntity"> {{ session()->has('cart') ? session()->get('cart')->totalQty : '0' }}</span>
-                        </a>
+                      
 
                         <form class="form-inline my-2 my-lg-0" style="border: none">
-                            <input class="form-control mr-sm-2" type="search" placeholder="{{__('Search here...')}}" aria-label="Search">
+                            <input class="form-control mr-sm-2" type="search" placeholder="Search here..." aria-label="Search">
                             <span class="fa fa-search"></span>
                         </form>
                     </div>
@@ -122,7 +215,7 @@
                         <div class="wrap-btn-slide1 w-size1 animated visible-false" data-appear="zoomIn">
                             <!-- Button -->
                             <a href="product.html" class="flex-c-m size2 bo-rad-23 s-text2 bgwhite hov1 trans-0-4">
-                               {{__(' Shop Now')}}
+                                Shop Now
                             </a>
                         </div>
                     </div>
@@ -170,91 +263,7 @@
         </div>
     </section>
 
-    <section class="recomended-sec banner bgwhite p-t-40 p-b-40">
-        <div class="container">
-            <div class="title">
-                <h2>{{__('highly recommendes books')}}</h2>
-                <hr>
-            </div>
-            <div class="row">
-                <div class="col-lg-3 col-md-6">
-                    <div class="item">
-                        <img src="book-store/images/img1.jpg" alt="img">
-                        <h3>how to be a bwase</h3>
-                        <h6><span class="price">$49</span> / <a href="#">{{__('Buy Now')}}</a></h6>
-                        <div class="hover">
-                            <a href="product-single.html">
-                                <span><i class="fa fa-long-arrow-right" aria-hidden="true"></i></span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                    <div class="item">
-                        <img src="book-store/images/img2.jpg" alt="img">
-                        <h3>How to write a book...</h3>
-                        <h6><span class="price">$19</span> / <a href="#">{{__('Buy Now')}}</a></h6>
-                        <span class="sale">Sale !</span>
-                        <div class="hover">
-                            <a href="product-single.html">
-                                <span><i class="fa fa-long-arrow-right" aria-hidden="true"></i></span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                    <div class="item">
-                        <img src="book-store/images/img3.jpg" alt="img">
-                        <h3>7-day self publish...</h3>
-                        <h6><span class="price">$49</span> / <a href="#">{{__('Buy Now')}}</a></h6>
-                        <div class="hover">
-                            <a href="product-single.html">
-                                <span><i class="fa fa-long-arrow-right" aria-hidden="true"></i></span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                    <div class="item">
-                        <img src="book-store/images/img4.jpg" alt="img">
-                        <h3>wendy doniger</h3>
-                        <h6><span class="price">$49</span> / <a href="#">{{__('Buy Now')}}</a></h6>
-                        <div class="hover">
-                            <a href="product-single.html">
-                                <span><i class="fa fa-long-arrow-right" aria-hidden="true"></i></span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- 
-    <section class="recent-book-sec">
-        <div class="container">
-            <div class="title">
-                <h2>highly recommendes books</h2>
-                <hr>
-            </div>
-            <div class="row">
-                @foreach($books as $book)
-                <div class="col-lg-2 col-md-3 col-sm-4">
-                    <div class="item">
-                        <img src="{{asset($book->cover)}}" alt="img">
-                        <h3><a href="#">{{$book->author}}</a></h3>
-                        <h6><span class="price">{{$book->price}}</h6>
-                        <h6></span><a href="#">Buy Now</a></h6>
-                    </div>
-                </div>
-                @endforeach
-            </div>
-            <div class="btn-sec">
-                <a href="#" class="btn gray-btn">view all books</a>
-            </div>
-        </div>
-    </section> -->
-
-    <section class="newproduct bgwhite p-t-45 p-b-105">
+    <section class="newproduct bgwhite py-5 my-5">
         <div class="container">
             <div class="sec-title p-b-60">
                 <h3 class="m-text5 t-center">
@@ -271,7 +280,7 @@
                     <div class="item-slick2 p-l-15 p-r-15">
                         <!-- Block2 -->
                         <div class="block2">
-                            <div class="block2-img wrap-pic-w of-hidden pos-relative block2-labelnew">
+                            <div class="block2-img wrap-pic-w of-hidden pos-relative block2-labelnew" style=" width:200px; height:250px">
                                 <img src="{{asset($book->cover)}}" alt="IMG-PRODUCT">
 
                                 <div class="block2-overlay trans-0-4">
@@ -282,9 +291,9 @@
 
                                     <div class="block2-btn-addcart w-size1 trans-0-4">
                                         <!-- Button -->
-                                        <a href="{{route('cart.add',$book->id)}}" class="flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4">
+                                        <button class="flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4">
                                             Add to Cart
-                                        </a>
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -309,71 +318,76 @@
     </section>
 
 
-    <section class="features-sec" style="background: url('book-store/images/about-img.jpg'); background-size:cover;background-position:center;">
+    <section class="features-sec mt-5 pt-5" >
         <div class="container" style="background: white" >
             <ul>
-                <li>
+                <li >
                     <span class="icon"><i class="fa fa-shopping-cart" aria-hidden="true"></i></span>
                     <h3>SAFE SHOPPING</h3>
                     <h5>Safe Shopping Guarantee</h5>
                     <h6>Every online transaction you make is 100% safe. Under the Fair Credit Billing Act, your bank cannot hold you liable for more than $50 of fraudulent charges.</h6>
                 </li>
-                <li>
+                <li >
                     <span class="icon return"><i class="fa fa-reply-all" aria-hidden="true"></i></span>
                     <h3>30- DAY RETURN</h3>
                     <h5>Moneyback guarantee</h5>
-                    <h6 class="mb-4">A money back guarantee within 30 days from the date of purchase. We are confident in the quality of our service, and you can be confident in us.</h6>
+                    <h6 class="">A money back guarantee within 30 days from the date of purchase. We are confident in the quality of our service, and you can be confident in us.</h6>
                 </li>
                 <li>
                     <span class="icon chat"><i class="fa fa-comments" aria-hidden="true"></i></span>
                     <h3>24/7 SUPPORT</h3>
                     <h5>online Consultations</h5>
-                    <h6 class="mb-4">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's...</h6>
+                    <h6 class="mb-4">Support chat are available always , if there where a problem contact with the admin. We will be there for you , just contact us.</h6>
                 </li>
             </ul>
         </div>
     </section>
 
-    <section class="testimonial-sec">
-        <div class="container">
-            <div id="testimonal" class="owl-carousel owl-theme">
-                <div class="item">
-                    <h3>I have a passion for teaching kids to become readers, to become comfortable with a book, not daunted. Books shouldn’t be daunting, they should be funny, exciting and wonderful; and learning to be a reader gives a terrific advantage.</h3>
-                    <div class="box-user">
-                        <h4 class="author">Roald Dahl</h4>
-                        <span class="country">Norway</span>
-                    </div>
-                </div>
-                <div class="item">
-                    <h3>It’s not that I don’t like people. It’s just that when I’m in the company of others – even my nearest and dearest – there always comes a moment when I’d rather be reading a book.</h3>
-                    <div class="box-user">
-                        <h4 class="author"> Maureen Corrigan</h4>
-                        <span class="country"> New York</span>
-                    </div>
-                </div>
-                <div class="item">
-                    <h3>Somebody who only reads newspapers and at best books of contemporary authors looks to me like an extremely near-sighted person who scorns eyeglasses. He is completely dependent on the prejudices and fashions of his times, since he never gets to see or hear anything else.</h3>
-                    <div class="box-user">
-                        <h4 class="author">Albert Einstein</h4>
-                        <span class="country">Germany</span>
-                    </div>
-                </div>
-                <div class="item">
-                    <h3>Of course anyone who truly loves books buys more of them than he or she can hope to read in one fleeting lifetime. A good book, resting unopened in its slot on a shelf, full of majestic potentiality, is the most comforting sort of intellectual wallpaper</h3>
-                    <div class="box-user">
-                        <h4 class="author">David Quammen</h4>
-                        <span class="country">United States</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="left-quote">
-            <img src="book-store/images/left-quote.png" alt="quote">
-        </div>
-        <div class="right-quote">
-            <img src="book-store/images/right-quote.png" alt="quote">
-        </div>
-    </section>
+    <section id="mu-testimonials">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="mu-testimonials-area">
+							<div class="mu-heading-area">
+								<h2 class="mu-heading-title">Who we are</h2>
+								<span class="mu-header-dot"></span>
+							</div>
+
+							<div class="mu-testimonials-block">
+								<ul class="mu-testimonial-slide">
+
+									<li>
+										<p>"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever."</p>
+										<img class="mu-rt-img" src="kindle-master/assets/images/reader-1.jpg" alt="img">
+										<h5 class="mu-rt-name"> - Alice Boga</h5>
+										<span class="mu-rt-title">CEO, Apple Inc.</span>
+									</li>
+
+									<li>
+										<p>"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever."</p>
+										<img class="mu-rt-img" src="kindle-master/assets/images/reader-2.jpg" alt="img">
+										<h5 class="mu-rt-name"> - Jhon Doe</h5>
+										<span class="mu-rt-title">Director, Google Inc.</span>
+									</li>
+
+									<li>
+										<p>"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever."</p>
+										<img class="mu-rt-img" src="kindle-master/assets/images/reader-3.jpg" alt="img">
+										<h5 class="mu-rt-name"> - Jessica Doe</h5>
+										<span class="mu-rt-title">Web Developer</span>
+									</li>
+
+								</ul>
+							</div>
+
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+    
 
     
     <footer>
@@ -419,16 +433,17 @@
                         <h3>Quick Contact us</h3>
                         <h6>We are now offering some good discount
                             on selected books go and shop them</h6>
-                        <form>
-                            <div class="row">
+                            <form method="POST" action="{{url('/contact_us')}}">
+                            @csrf
+                                                        <div class="row">
                                 <div class="col-md-6">
-                                    <input placeholder="Name" required>
+                                    <input placeholder="Name" name="name" required>
                                 </div>
                                 <div class="col-md-6">
-                                    <input type="email" placeholder="Email" required>
+                                    <input type="email" placeholder="Email" name="email" required>
                                 </div>
                                 <div class="col-md-12">
-                                    <textarea placeholder="Messege"></textarea>
+                                    <textarea placeholder="Messege" name="msg"></textarea>
                                 </div>
                                 <div class="col-md-12">
                                     <button class="btn black">Alright, Submit</button>
@@ -439,30 +454,30 @@
                 </div>
             </div>
         </div>
-        <div class="copy-right">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-6">
-                        <h5>(C) 2017. All Rights Reserved. BookStore Wordpress Theme</h5>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="share align-middle">
-                            <span class="fb"><i class="fa fa-facebook-official"></i></span>
-                            <span class="instagram"><i class="fa fa-instagram"></i></span>
-                            <span class="twitter"><i class="fa fa-twitter"></i></span>
-                            <span class="pinterest"><i class="fa fa-pinterest"></i></span>
-                            <span class="google"><i class="fa fa-google-plus"></i></span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <a href="#" id="scroll"><span></span></a>
+
+       
     </footer>
-    <script src="book-store/js/jquery.min.js"></script>
-    <script src="book-store/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="book-store/js/owl.carousel.min.js"></script>
-    <script src="book-store/js/custom.js"></script>
+
+
     <script type="text/javascript" src="fash/vendor/jquery/jquery-3.2.1.min.js"></script>
+
+    <script src="kindle-master/assets/js/bootstrap.min.js"></script>
+	<!-- Slick slider -->
+    <script type="text/javascript" src="kindle-master/assets/js/slick.min.js"></script>
+    <!-- Counter js -->
+    <script type="text/javascript" src="kindle-master/assets/js/counter.js"></script>
+    <!-- Ajax contact form  -->
+    <script type="text/javascript" src="kindle-master/assets/js/app.js"></script>
+   
+ 
+	
+    <!-- Custom js -->
+	<script type="text/javascript" src="kindle-master/assets/js/custom.js"></script>
+	
+    
+
+   
     <!--===============================================================================================-->
     <script type="text/javascript" src="fash/vendor/animsition/js/animsition.min.js"></script>
     <!--===============================================================================================-->

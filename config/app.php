@@ -168,7 +168,10 @@ return [
         /*
          * Package Service Providers...
          */
-
+        Laratrust\LaratrustServiceProvider::class,
+        Cog\Laravel\Ban\Providers\BanServiceProvider::class,
+        Collective\Html\HtmlServiceProvider::class,
+        Nexmo\Laravel\NexmoServiceProvider::class,
         /*
          * Application Service Providers...
          */
@@ -230,7 +233,10 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'Stripe' => Cartalyst\Stripe\Laravel\Facades\Stripe::class,
         'PDF' => Barryvdh\DomPDF\Facade::class,
-
+        'Laratrust'   => Laratrust\LaratrustFacade::class,
+        'Form' => Collective\Html\FormFacade::class,
+        'Html' => Collective\Html\HtmlFacade::class,
+        'Nexmo' => Nexmo\Laravel\Facade\Nexmo::class,
     ],
 
 ];

@@ -23,9 +23,15 @@ class LoginController extends Controller
     | to conveniently provide its functionality to your applications.
     |
     */
-
     use AuthenticatesUsers;
 
+    public function authenticated($request , $user){
+        if($user->hasRole('admin')){
+            return redirect()->route('admin.index') ;
+        }
+        
+     
+    } 
     /**
      * Where to redirect users after login.
      *

@@ -19,7 +19,7 @@ class BookController extends Controller
     {   
 
         if(request()->has('category')){
-            $book = Book::where('category','=',request('category'))->where('price','!=',0)->paginate(5)->appends([
+            $book = book::where('category_id' ,'=',request('category'))->paginate(5)->appends([
                 'category'=> request('category')
              ]);;
         }else{
@@ -27,12 +27,11 @@ class BookController extends Controller
         }
 
 
-        $books = Book::inRandomOrder()->take(4)->get();
-        $category = Book::all()->groupBy('category');
+        // $books = Book::inRandomOrder()->take(4)->get();
+        $category = \App\Category::all();
 
         return view('/home', [
             'books' => $book,
-            'recomend' => $books,
             'category' => $category
         ]);
     }

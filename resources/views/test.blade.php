@@ -37,8 +37,6 @@
     <!--===============================================================================================-->
     <link rel="stylesheet" type="text/css" href="fash/css/util.css">
     <link rel="stylesheet" type="text/css" href="fash/css/main.css">
-    <link rel="stylesheet" type="text/css" href="book-store/css/owl.carousel.min.css">
-
 
 
 </head>

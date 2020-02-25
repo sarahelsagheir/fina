@@ -19,7 +19,7 @@
     <link rel="stylesheet" href="../fashi/css/elegant-icons.css" type="text/css">
     <link rel="stylesheet" href="../fashi/css/owl.carousel.min.css" type="text/css">
     <link rel="stylesheet" href="../fashi/css/nice-select.css" type="text/css">
-<link rel="stylesheet" href="../fashi/css/jquery-ui.min.css" type="text/css">
+    <link rel="stylesheet" href="../fashi/css/jquery-ui.min.css" type="text/css">
     <link rel="stylesheet" href="../fashi/css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="../fashi/css/style.css" type="text/css">
     <link rel="stylesheet" href="{{asset('book-store/css/styles.css')}}">

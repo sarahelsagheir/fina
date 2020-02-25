@@ -7,11 +7,22 @@
     <meta name="keywords" content="Fashi, unica, creative, html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Open Book</title>
+    <title>BOOKIE</title>
+    <link href='https://fonts.googleapis.com/css?family=Sofia' rel='stylesheet'>
 
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
 
+    <link href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
+
+    <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.css" rel="stylesheet">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-star-rating/4.0.2/css/star-rating.min.css" />
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-star-rating/4.0.2/js/star-rating.min.js"></script>
+<
     <!-- Css Styles -->
     <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"> -->
 
@@ -36,19 +47,7 @@
     </div>
 
     <header>
-        <div class="header-top">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-3"><a href="#" class="web-url">www.bookstore.com</a></div>
-                    <div class="col-md-6">
-                        <h5>Free Shipping Over $99 + 3 Free Samples With Every Order</h5>
-                    </div>
-                    <div class="col-md-3">
-                        <span class="ph-number">Call : 800 1234 5678</span>
-                    </div>
-                </div>
-            </div>
-        </div>
+      
         <div class="main-menu">
             <div class="container">
                 @include('layouts.navbar')
@@ -72,15 +71,15 @@
                     </div>
                     @endif
                     <div class="cart-table">
-                        <table style="border: none; box-shadow: 4px 4px 8px 4px rgba(0, 0, 0, 0.2);
+                        <table class="table-striped" style="border: none; box-shadow: 4px 4px 8px 4px rgba(0, 0, 0, 0.2);
 ">
-                            <thead>
-                                <tr>
-                                    <th>Image</th>
-                                    <th class="p-name">Product Name</th>
-                                    <th>Price</th>
-                                    <th>Quantity</th>
-                                    <th>Delete</th>
+                            <thead style="background: #074985;color:white">
+                                <tr style="color: white">
+                                    <th style="color: white">Image</th>
+                                   <th style="color: white"  class="p-name">Product Name</th>
+                                   <th style="color: white">Price</th>
+                                   <th style="color: white">Quantity</th>
+                                   <th style="color: white">Delete</th>
 
                                 </tr>
                             </thead>
@@ -127,7 +126,7 @@
             </div>
             <div class="row justify-content-end">
 
-                <div class="col-lg-12">
+                <div class="col-lg-6">
                     <div class="proceed-checkout"  style="border: none; box-shadow: 4px 4px 8px 4px rgba(0, 0, 0, 0.2);">
                         <ul>
                             <!-- <li class="subtotal">Subtotal <span>{{$cart->totalPrice}}L.E</span></li> -->
@@ -138,7 +137,7 @@
                 </div>
             </div>
             @else
-            <p>There are no items in the cart</p>
+            <h4>There are no items in the cart</h4>
 
             @endif
         </div>
@@ -189,16 +188,17 @@
                         <h3>Quick Contact us</h3>
                         <h6>We are now offering some good discount
                             on selected books go and shop them</h6>
-                        <form>
+                            <form method="POST" action="{{url('/contact_us')}}">
+                            @csrf
                             <div class="row">
                                 <div class="col-md-6">
-                                    <input placeholder="Name" required>
+                                    <input placeholder="Name" name="name" required>
                                 </div>
                                 <div class="col-md-6">
-                                    <input type="email" placeholder="Email" required>
+                                    <input type="email" placeholder="Email" name="email" required>
                                 </div>
                                 <div class="col-md-12">
-                                    <textarea placeholder="Messege"></textarea>
+                                    <textarea placeholder="Messege" name="msg"></textarea>
                                 </div>
                                 <div class="col-md-12">
                                     <button class="btn black">Alright, Submit</button>
@@ -209,24 +209,7 @@
                 </div>
             </div>
         </div>
-        <div class="copy-right">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-6">
-                        <h5>(C) 2017. All Rights Reserved. BookStore Wordpress Theme</h5>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="share align-middle">
-                            <span class="fb"><i class="fa fa-facebook-official"></i></span>
-                            <span class="instagram"><i class="fa fa-instagram"></i></span>
-                            <span class="twitter"><i class="fa fa-twitter"></i></span>
-                            <span class="pinterest"><i class="fa fa-pinterest"></i></span>
-                            <span class="google"><i class="fa fa-google-plus"></i></span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+       
     </footer>
 
 

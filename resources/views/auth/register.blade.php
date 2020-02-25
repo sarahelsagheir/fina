@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="zxx">
 
@@ -54,11 +52,11 @@
             <div class="row">
                 <div class="col-lg-6 offset-lg-3">
                     <div class="register-form">
-                        <h2>{{__('Register')}}</h2>
+                        <h2>Register</h2>
                         <form method="POST" action="{{ route('register') }}">
                         @csrf
                             <div class="group-input">
-                                <label for="username">{{__('Username')}} *</label>
+                                <label for="username">Username *</label>
                                 <input type="text" id="username" class=" @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
                                 @error('name')
                                     <span class="invalid-feedback" role="alert">
@@ -67,7 +65,7 @@
                                 @enderror
                             </div>
                             <div class="group-input">
-                                <label for="username">{{__('Email address')}} *</label>
+                                <label for="username">Email address *</label>
                                 <input type="email" id="username" class=" @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
                                 @error('email')
                                     <span class="invalid-feedback" role="alert">
@@ -76,7 +74,7 @@
                                 @enderror
                             </div>
                             <div class="group-input">
-                                <label for="pass">{{__('Password')}} *</label>
+                                <label for="pass">Password *</label>
                                 <input type="password" id="pass" class=" @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
                                 @error('password')
                                     <span class="invalid-feedback" role="alert">
@@ -85,13 +83,13 @@
                                 @enderror
                             </div>
                             <div class="group-input">
-                                <label for="con-pass">{{__('Confirm Password')}} *</label>
+                                <label for="con-pass">Confirm Password *</label>
                                 <input type="password" id="con-pass"  name="password_confirmation" required autocomplete="new-password">
                             </div>
-                            <button type="submit" class="btn register-btn">{{__('REGISTER')}}</button>
+                            <button type="submit" class="btn register-btn">REGISTER</button>
                         </form>
                         <div class="switch-login">
-                            <a href="{{ route('login') }}" class="or-login">{{__('Or Login')}}</a>
+                            <a href="{{ route('login') }}" class="or-login">Or Login</a>
                         </div>
                     </div>
                 </div>

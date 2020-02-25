@@ -7,7 +7,7 @@
     <meta name="keywords" content="Fashi, unica, creative, html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Fashi | Template</title>
+    <title>BOOKIE</title>
 
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
@@ -48,19 +48,7 @@
     </div>
 
     <header>
-        <div class="header-top">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-3"><a href="#" class="web-url">www.bookstore.com</a></div>
-                    <div class="col-md-6">
-                        <h5>Free Shipping Over $99 + 3 Free Samples With Every Order</h5>
-                    </div>
-                    <div class="col-md-3">
-                        <span class="ph-number">Call : 800 1234 5678</span>
-                    </div>
-                </div>
-            </div>
-        </div>
+
         <div class="main-menu">
             <div class="container">
                 @include('layouts.navbar')
@@ -79,25 +67,25 @@
                     <!-- Block2 -->
                     <div class="block2">
                         <div class="block2-img wrap-pic-w of-hidden pos-relative block2-labelsale">
-                            <img src="{{asset($book->cover)}}" alt="IMG-PRODUCT" style="border: none; box-shadow: 2px 4px 8px 4px rgba(0, 0, 0, 0.2);">
+                            <img src="{{$book->cover}}" alt="IMG-PRODUCT" style="border: none; box-shadow: 2px 4px 8px 4px rgba(0, 0, 0, 0.2);  width:200px; height:250px">
 
-                            <div class="block2-overlay trans-0-4">
+                            <div class="block2-overlay trans-0-4" style=" width:200px">
 
-                        
+
 
                                 <div class="block2-btn-addcart w-size1 trans-0-4">
                                     <!-- Button -->
-                                    <form  method="post" action="{{route('deleteBook',$book->id)}}">
+                                    <form method="post" action="{{route('deleteBook',$book->id)}}">
                                         @csrf
                                         @method('delete')
-                                      
+
                                         <button class="flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4" onclick="return confirm('are you sure?')" type="submit">Delete</button>
-                                    </form> 
+                                    </form>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="block2-txt px-2 py-2 " style="border: none; box-shadow: 2px 4px 8px 4px rgba(0, 0, 0, 0.2);">
+                        <div class="block2-txt px-2 py-2 " style="border: none; box-shadow: 2px 4px 8px 4px rgba(0, 0, 0, 0.2);  width:200px">
                             <a href="{{route('book.view',['id' => $book['id'] ])}}" class="block2-name dis-block s-text3 p-b-5">
                                 {{$book->title}}
                             </a>
@@ -159,16 +147,17 @@
                             <h3>Quick Contact us</h3>
                             <h6>We are now offering some good discount
                                 on selected books go and shop them</h6>
-                            <form>
+                                <form method="POST" action="{{url('/contact_us')}}">
+                            @csrf
                                 <div class="row">
                                     <div class="col-md-6">
-                                        <input placeholder="Name" required>
+                                        <input placeholder="Name" name="name" required>
                                     </div>
                                     <div class="col-md-6">
-                                        <input type="email" placeholder="Email" required>
+                                        <input type="email" placeholder="Email" name="email" required>
                                     </div>
                                     <div class="col-md-12">
-                                        <textarea placeholder="Messege"></textarea>
+                                        <textarea placeholder="Messege" name="msg"></textarea>
                                     </div>
                                     <div class="col-md-12">
                                         <button class="btn black">Alright, Submit</button>
@@ -179,24 +168,7 @@
                     </div>
                 </div>
             </div>
-            <div class="copy-right">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <h5>(C) 2017. All Rights Reserved. BookStore Wordpress Theme</h5>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="share align-middle">
-                                <span class="fb"><i class="fa fa-facebook-official"></i></span>
-                                <span class="instagram"><i class="fa fa-instagram"></i></span>
-                                <span class="twitter"><i class="fa fa-twitter"></i></span>
-                                <span class="pinterest"><i class="fa fa-pinterest"></i></span>
-                                <span class="google"><i class="fa fa-google-plus"></i></span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+
         </footer>
 
 

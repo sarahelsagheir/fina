@@ -16,11 +16,13 @@ use Illuminate\Http\Request;
 
 class ProfileController extends Controller
 {
-    public function changePasswordForm(){
+    public function changePasswordForm()
+    {
         return view('changePassword');
     }
 
-    public function changePassword(Request $request){
+    public function changePassword(Request $request)
+    {
         if (!(Hash::check($request->get('current_password'), Auth::user()->password))) {
             return back()->with('error', 'your current password does not match');
         }
@@ -38,54 +40,73 @@ class ProfileController extends Controller
         return back()->with('toast_success', 'password changed successfully');
     }
 
-    public function getBookForm(){
-        return view('addBook');
+    public function getBookForm()
+    {
+        $categories = \App\Category::all();
+        return view('addBook', compact('categories'));
     }
 
-    public function addBook(StoreBookRequest $request){
-        if (request()->has('cover')) {
-            $cover = request()->file('cover');
-            $cover_name = time() . '.' . $cover->getClientOriginalExtension();
-            $cover_path = public_path('images/');
-            $cover->move($cover_path, $cover_name);
+    public function addBook(StoreBookRequest $request)
+    {    $input = $request->all();
 
-            $books = Book::create([
-                'title' => $request->title,
-                'author' => $request->author,
-                'price' => 0,
-                'category' => $request->category,
-                'status' => true,
-                'cover' => 'images/' . $cover_name,
-                'user_id' => $request->user()->id
-            ]);
+        if($file = $request->file('cover')){
+            $name = time() . $file->getClientOriginalName();
+            $file->move('coverpages', $name);
+            $input['cover'] = $name;
+           
+            $input['user_id'] = $request->user()->id;
+            $input['category_id'] = $request->category;
+            
 
-            $books->save();
+            if (!auth()->user()->hasRole('book_store')) {
+                $input['price'] = '0';
+
+                Book::create($input);
+
+         
+            } else {
+                Book::create($input);
+
+
+
+            }
+
             return redirect(route('books'))->with('toast_success', 'Thanks For Sharing');
-        } elseif(!request()->has('cover')) {
-            $books = Book::create([
-                'title' => $request->title,
-                'author' => $request->author,
-                'price' => 0,
-                'category' => $request->category,
-                'status' => true,
-                'user_id' => $request->user()->id
-            ]);
+        } 
+        else {
+            $input['user_id'] = $request->user()->id;
+            $input['category_id'] = $request->category;
+            
 
-            $books->save();
+            if (!auth()->user()->hasRole('book_store')) {
+                $input['price'] = '0';
+                Book::create($input);
+
+         
+            } else {
+                Book::create($input);
+
+            }
             return redirect(route('books'))->with('toast_success', 'Thanks For Sharing');
-        }else{
-            return back()->with('toast_error', 'something went rong please try again');
-
         }
     }
 
-    public function getBooks(){
-        $books = book::where('user_id', '=', auth()->user()->id)->get();
+
+
+
+
+
+    
+
+    public function getBooks()
+    {
+        $books = Book::where('user_id', '=', auth()->user()->id)->get();
         return view('Books', [
             'books' => $books
         ]);
     }
-    public function deleteBook($id){
+    public function deleteBook($id)
+    {
         $books = Book::find($id);
         //delete
         $books->delete();
@@ -115,10 +136,8 @@ class ProfileController extends Controller
             $user->cover = 'images/' . $cover_name;
             $user->save();
             return back()->with('toast_success', 'Profile Picture Uploaded Successfully');
-        }
-        else{
+        } else {
             return back()->with('toast_error', 'something went rong please try again');
         }
-        
     }
 }

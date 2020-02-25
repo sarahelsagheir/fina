@@ -8,7 +8,7 @@
     <img class="mr-3" src="{{asset($comment->commenter->cover ?? $comment->guest_email)}}" style="vertical-align: middle;width: 40px; height: 40px;border-radius: 50%;" alt="avatar">
     <div class="media-body">
         <h5 class="mt-2 mb-1 text-capitalize">{{ $comment->commenter->name ?? $comment->guest_name }} <small class="text-muted">- {{ $comment->created_at->diffForHumans() }}</small></h5>
-        <div style="white-space: pre-wrap;">{!! $markdown->line($comment->comment) !!}</div>
+        <div style="white-space: pre-wrap; font-size: 16px">{!! $markdown->line($comment->comment) !!}</div>
 
         <div class="mt-3">
             @can('reply-to-comment', $comment)

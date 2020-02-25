@@ -12,12 +12,7 @@ class ContactsController extends Controller
 {
     public function get()
     {
-        // $contacts = User::where('id', '!=', auth()->id())->get();
-        $contacts = Message::where('from', '=', auth()->id())
-                   ->orwhere('to','=',auth()->id())    
-                   ->get();
-     $contacts = User::find($contacts);
-
+        $contacts = User::where('id', '!=', auth()->id())->get();
         $unreadIds = Message::select(\DB::raw('`from` as sender_id, count(`from`) as messages_count'))
             ->where('to', auth()->id())
             ->where('read', false)
@@ -33,6 +28,28 @@ class ContactsController extends Controller
 
     
         return response()->json($contacts);
+    }
+ public function normalget()
+    {
+        $contacts = Message::where('from', '=', auth()->id())
+                   ->orwhere('to', '=', auth()->id())
+                   ->get();
+        $contacts = User::find($contacts);
+
+        $unreadIds = Message::select(\DB::raw('from as sender_id, count(from) as messages_count'))
+            ->where('to', auth()->id())
+            ->where('read', false)
+            ->groupBy('from')
+            ->get();
+        $contacts = $contacts->map(function ($contact) use ($unreadIds) {
+            $contactUnread = $unreadIds->where('sender_id', $contact->id)->first();
+    
+            $contact->unread = $contactUnread ? $contactUnread->messages_count : 0;
+    
+            return $contact;
+        });
+        return response()->json($contacts);
+
     }
     public function getMessagesFor($id)
     {
@@ -66,7 +83,6 @@ class ContactsController extends Controller
             'to' => $id,
             'text'=>$request->text
         ]);
-
         broadcast(new NewMessage($message));
          response()->json($message);
          return back();

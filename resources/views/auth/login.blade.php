@@ -57,7 +57,7 @@
                         <form method="POST" action="{{ route('login') }}">
                             @csrf
                             <div class="group-input">
-                                <label for="username">{{__('Email address')}} *</label>
+                                <label for="username">Email address *</label>
                                 <input type="email" id="username" class=" @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
                                 @error('email')
                                     <span class="invalid-feedback" role="alert">
@@ -66,7 +66,7 @@
                                 @enderror
                             </div>
                             <div class="group-input">
-                                <label for="pass">{{__('Password')}} *</label>
+                                <label for="pass">Password *</label>
                                 <input type="password" id="pass" class=" @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
                                 @error('password')
                                     <span class="invalid-feedback" role="alert">
@@ -77,14 +77,14 @@
                             <div class="group-input gi-check">
                                 <div class="gi-more">
                                     <label for="save-pass">
-                                    {{__('Save Password')}}
+                                        Save Password
                                         <input type="checkbox" id="save-pass">
                                         <span class="checkmark" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}></span>
                                     </label>
-                                    <a href="{{ route('password.request') }}" class="forget-pass" >{{__('Forget your Password')}}</a>
+                                    <a href="{{ route('password.request') }}" class="forget-pass" >Forget your Password</a>
                                 </div>
                             </div>
-                            <button type="submit" class="btn login-btn">{{__('Sign In')}}</button>
+                            <button type="submit" class="btn login-btn">Sign In</button>
                            <div class="row mt-4 justify-content-center">
                            <a href="login/facebook" class="btn mr-2" style="border-radius: 50%"><i class="fa fa-facebook"></i></a>
                             <a href="login/google" class="btn mr-2 " style="border-radius: 50%"><i class="fa fa-google"></i></a>
@@ -94,7 +94,7 @@
                         
                         </form>
                         <div class="switch-login">
-                            <a href="{{ route('register') }}" class="or-login">{{__('Or Create An Account')}}</a>
+                            <a href="{{ route('register') }}" class="or-login">Or Create An Account</a>
                         </div>
                     </div>
                 </div>

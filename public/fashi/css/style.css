@@ -37,7 +37,6 @@ body {
 	font-family: "Muli", sans-serif;
 	-webkit-font-smoothing: antialiased;
 	font-smoothing: antialiased;
-	/* background-color: #A0E0E9;																																																				 */
 }
 
 h1,
@@ -2909,9 +2908,11 @@ ol {
 }
 
 .checkout-form input {
-	border: 2px solid #ebebeb;
+	border-radius: none;
+	padding: 18px 10px;
 	margin-bottom: 25px;
 	padding-left: 15px;
+	outline: none;
 }
 
 .checkout-form input.street-first {

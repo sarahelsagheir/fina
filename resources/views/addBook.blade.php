@@ -1,3 +1,6 @@
+
+
+
 <!DOCTYPE html>
 <html lang="zxx">
 
@@ -94,22 +97,30 @@
                                 <label for="author"><strong>Author:</strong></label>
                                 <input style="border: none;border-bottom:1px solid #ccc;border-radius:0" type="text" class="form-control" id="author" name="author">
                             </div>
+                            @if(auth()->user()->hasRole('book_store'))
+                            <div class="group-input">
+                                <label for="Quantity"><strong>Quantity:</strong></label>
+                                <input style="border: none;border-bottom:1px solid #ccc;border-radius:0" type="text" class="form-control" id="quantity" name="quantity">
+                            </div>
+                            <div class="group-input">
+                                <label for="author"><strong>Price:</strong></label>
+                                <input style="border: none;border-bottom:1px solid #ccc;border-radius:0" type="text" class="form-control" id="price" name="price">
+                            </div>
+                            @endif
+                            
                             <div class="group-input">
                                 <label for="category"><strong>Category:</strong></label>
                                 <select style="border: none;border-bottom:1px solid #ccc;border-radius:0" class="browser-default custom-select" id="category" name="category">
                                     <option disabled selected>Open this select menu</option>
-                                    <option value="Fiction">Fiction</option>
-                                    <option value="History">Histroy</option>
-                                    <option value="classics">classics</option>
-                                    <option value="non-Fiction">non-Fiction</option>
-                                    <option value="Historical-Fiction">Historical-Fiction</option>
-                                    <option value="Childern">CHildern</option>
-                                    <option value="Biography">Biography</option>
-                                    <option value="Horror">Horror</option>
-                                    <option value="Thriller">Thriller</option>
-                                    <option value="Romance">Romance</option>
-                                    <option value="Sci-Fiction">Sci-Fiction</option>
+                                    @foreach($categories as $category)
+                                    <option value="{{$category->id}}"> {{$category->title}} </option>
+                                    @endforeach
+                                    
                                 </select>
+                            </div>
+                            <div class="group-input">
+                                <label for="description"><strong>Description:</strong></label>
+                                <input style="border: none;border-bottom:1px solid #ccc;border-radius:0" type="text" class="form-control" id="description" name="description">
                             </div>
                             <div class="group-input">
                                 <label for="cover"><strong>Cover</strong></label>
@@ -152,3 +163,7 @@
 </body>
 
 </html>
+
+
+
+

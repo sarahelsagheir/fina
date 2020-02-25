@@ -7,7 +7,7 @@
     <meta name="keywords" content="Fashi, unica, creative, html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Open Book</title>
+    <title>BOOKIE</title>
 
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
@@ -32,19 +32,7 @@
     </div>
 
     <header>
-        <div class="header-top">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-3"><a href="#" class="web-url">www.bookstore.com</a></div>
-                    <div class="col-md-6">
-                        <h5>Free Shipping Over $99 + 3 Free Samples With Every Order</h5>
-                    </div>
-                    <div class="col-md-3">
-                        <span class="ph-number">Call : 800 1234 5678</span>
-                    </div>
-                </div>
-            </div>
-        </div>
+      
         <div class="main-menu">
             <div class="container">
                 @include('layouts.navbar')
@@ -53,7 +41,7 @@
         </div>
     </header>
 
-    <div class="register-login-section spad">
+    <div class="register-login-section">
         <div class="container">
 
             <div class="row">
@@ -80,7 +68,7 @@
                         </div>
                         @endif
 
-                        <form action="{{route('changePassword')}}" method="post">
+                        <form action="{{route('changePassword')}}" method="post" class="p-5" style="border: none; box-shadow: 4px 4px 8px 4px rgba(0, 0, 0, 0.2);">
                             @csrf
                             <div class="group-input">
                                 <label for="current_password"><strong>Current Password:</strong></label>

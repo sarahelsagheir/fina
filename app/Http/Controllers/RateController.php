@@ -10,12 +10,14 @@ use willvincent\Rateable\Rating;
 
 class RateController extends Controller
 {
-    public function rateNotification($id){
+    //auth user rate
+    public function index($id){
         $user = User::find($id);
         return view('rate.showRate',compact('user'));
-     
+
     }
-    public function rateUser($id){
+    //get borrower rate form
+    public function create($id){
         $user = User::find($id);
         if($user->id != Auth::user()->id){
             return view('rate.index',compact('user'));
@@ -24,8 +26,8 @@ class RateController extends Controller
             return view('home');
         }
     }
-
-    public function rateShow(Request $request,$id)
+// store user rate
+    public function store(Request $request,$id)
     {
      request()->validate(['rate' => 'required']);
      $user= user::find($id);
@@ -33,15 +35,14 @@ class RateController extends Controller
      $rating->rating = $request->rate;
      $rating->user_id = auth()->user()->id;
      $user->ratings()->save($rating);
-     return view('rate.index',compact('user'))->with('toast_success','Thanks for your openion');
+     return view('rate.index',compact('user'))->with('toast_success','Thanks for sharing your opinion');
     }
-    public function rateBorrower($id){
+    public function show($id){
 
         $borrower = Borrower::where('book_id','=',$id)->value('user_id');
         $user = User::find($borrower);
-        
         return view('rate.index',compact('user'));
 
     }
-  
+
 }

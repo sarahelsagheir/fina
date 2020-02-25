@@ -14,7 +14,8 @@ class LandingBageController extends Controller
      */
     public function index()
     {
-        $books = Book::inRandomOrder()->take(10)->get();
+        $books = Book::inRandomOrder()->take(10)->where('price','!=','0')->get();
+
         return view('welcome')->with('books',$books);
     }
 

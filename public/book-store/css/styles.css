@@ -14,9 +14,7 @@ body {
   font-family: 'Montserrat', sans-serif;
   color: #000;
   float: left;
-  width: 100%;
-  /* background-color: #A0E0E9; */
- }
+  width: 100%; }
 
 * {
   -webkit-box-sizing: border-box;

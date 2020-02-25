@@ -7,11 +7,21 @@
     <meta name="keywords" content="Fashi, unica, creative, html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Open Book</title>
+    <title>BOOKIE</title>
 
     <!-- Google Font -->
+    <link href='https://fonts.googleapis.com/css?family=Sofia' rel='stylesheet'>
+
+    <link href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
 
+    <!-- <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.css" rel="stylesheet">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-star-rating/4.0.2/css/star-rating.min.css" />
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-star-rating/4.0.2/js/star-rating.min.js"></script> -->
     <!-- Css Styles -->
     <link rel="stylesheet" href="../fashi/css/bootstrap.min.css" type="text/css">
     <link rel="stylesheet" href="../fashi/css/font-awesome.min.css" type="text/css">
@@ -26,95 +36,68 @@
 </head>
 
 <body>
-    <!-- Page Preloder -->
     <div id="preloder">
         <div class="loader"></div>
     </div>
-
-
     <header>
-        <div class="header-top">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-3"><a href="#" class="web-url">www.bookstore.com</a></div>
-                    <div class="col-md-6">
-                        <h5>Free Shipping Over $99 + 3 Free Samples With Every Order</h5>
-                    </div>
-                    <div class="col-md-3">
-                        <span class="ph-number">Call : 800 1234 5678</span>
-                    </div>
-                </div>
-            </div>
-        </div>
         <div class="main-menu">
             <div class="container">
                 @include('layouts.navbar')
-
             </div>
         </div>
     </header>
-
-    <!-- Header Section Begin -->
-
-    <!-- Header End -->
-
-    <!-- Breadcrumb Section Begin -->
-
-    <!-- Breadcrumb Section Begin -->
-
-    <!-- Product Shop Section Begin -->
-    <section class="product-shop spad page-details">
+    <section class="product-shop spad page-details p-0 my-3">
         <div class="container">
             @if( session()->has('success') )
             <div class="alert alert-success">{{ session()->get('success') }}</div>
             @endif
-            <div class="row"  style="border: none; box-shadow: 2px 4px 8px 4px rgba(0, 0, 0, 0.2);">
-
+            <div class="row" style="border: none; box-shadow: 2px 4px 8px 4px rgba(0, 0, 0, 0.2);">
                 <div class="col-lg-9">
-                    <div class="row p-3" >
+                    <div class="row p-3">
 
                         <div class="col-lg-4">
                             <div class="product-pic-zoom">
-                                <img class="product-big-img" src="{{asset('../'.$book->cover)}}" alt="">
+                                <img class="product-big-img" src="{{$book->cover}}" alt="">
                                 <div class="zoom-icon">
                                     <i class="fa fa-search-plus"></i>
                                 </div>
                             </div>
 
                         </div>
-
                         <div class="col-lg-6">
-                            <div class="product-details"  >
+                            <div class="product-details">
                                 <div class="pd-title">
-                                    <span>{{$book->category}}</span>
-                                    <h3>{{$book->title}}</h3>
+                                    <span>{{$book->category->title}}</span>
+
+                                    <h3 class="my-4">{{$book->title}}</h3>
                                     <form action="{{route('wishlist.store')}}" class="heart-icon" id="contact_form" method="post">
                                         {{csrf_field()}}
                                         <input name="user_id" type="text" value="{{Auth::user()->id}}" hidden />
                                         <input name="product_id" type="text" value="{{$book->id}}" hidden />
                                         <button type="submit" style="background: transparent; border:none" class=""><i class="icon_heart_alt"></i></button>
                                     </form>
-                                   
+
                                 </div>
-                                <div class="pd-rating">
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star-o"></i>
-                                    <span>(5)</span>
-                                </div>
-                                <div class="pd-desc">
+                                <div class="pd-desc ">
                                     <p>Lorem ipsum dolor sit amet, consectetur ing elit, sed do eiusmod tempor sum dolor
                                         sit amet, consectetur adipisicing elit, sed do mod tempor</p>
+
+                                    @if(!empty($book->price))
                                     <h4 style="color: #074985">{{$book->price}} L.E</h4>
+                                    @else
+                                    <h4 style="color: #074985">Free</h4>
+                                    @endif
                                 </div>
-
-
+                                @if(!empty($book->price))
                                 <div class="quantity">
-                                    <a href="{{route('cart.add',$book->id)}}" class="btn pd-cart">Add To Cart</a>
+                                    <a href="{{route('cart.add',$book->id)}}" style="display: inline" class="btn">Add to cart</i></a>
                                 </div>
-                                <ul class="pd-tags">
+                                @else
+                                <a href="{{'/borrow/'.$book->id.'/'.$book->user_id}}" class="flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4 btn">
+                                    Borrow
+                                </a>
+                                @endif
+                                <ul class="pd-tags mt-5">
                                     <li><span>AUTHOR</span>: {{$book->author}}</li>
                                 </ul>
                             </div>
@@ -126,36 +109,21 @@
                             @comments(['model' => $book])
                         </div>
                     </div>
-                    </div>
-
-
-
-
                 </div>
             </div>
         </div>
+        </div>
     </section>
-    <!-- Product Shop Section End -->
 
-    <!-- Related Products Section End -->
-
-    <!-- Related Products Section End -->
-
-    <!-- Partner Logo Section Begin -->
-
-    <!-- Partner Logo Section End -->
-
-
-    <!-- Footer Section End -->
     <footer>
         <div class="container">
             <div class="row">
                 <div class="col-md-4">
                     <div class="address">
                         <h4>Our Address</h4>
-                        <h6>The BookStore Theme, 4th Store
+                        <h6>Bookie, 4th Store
                             Beside that building, USA</h6>
-                        <h6>Call : 800 1234 5678</h6>
+                        <h6>Call : 123 456 789</h6>
                         <h6>Email : info@bookstore.com</h6>
                     </div>
                     <div class="timing">
@@ -190,16 +158,17 @@
                         <h3>Quick Contact us</h3>
                         <h6>We are now offering some good discount
                             on selected books go and shop them</h6>
-                        <form>
+                            <form method="POST" action="{{url('/contact_us')}}">
+                            @csrf
                             <div class="row">
                                 <div class="col-md-6">
-                                    <input placeholder="Name" required>
+                                    <input placeholder="Name" name="name" required>
                                 </div>
                                 <div class="col-md-6">
-                                    <input type="email" placeholder="Email" required>
+                                    <input type="email" placeholder="Email" name="email" required>
                                 </div>
                                 <div class="col-md-12">
-                                    <textarea placeholder="Messege"></textarea>
+                                    <textarea placeholder="Messege" name="msg"></textarea>
                                 </div>
                                 <div class="col-md-12">
                                     <button class="btn black">Alright, Submit</button>
@@ -210,24 +179,7 @@
                 </div>
             </div>
         </div>
-        <div class="copy-right">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-6">
-                        <h5>(C) 2017. All Rights Reserved. BookStore Wordpress Theme</h5>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="share align-middle">
-                            <span class="fb"><i class="fa fa-facebook-official"></i></span>
-                            <span class="instagram"><i class="fa fa-instagram"></i></span>
-                            <span class="twitter"><i class="fa fa-twitter"></i></span>
-                            <span class="pinterest"><i class="fa fa-pinterest"></i></span>
-                            <span class="google"><i class="fa fa-google-plus"></i></span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+
     </footer>
     <!-- Js Plugins -->
     <script src="../fashi/js/jquery-3.3.1.min.js"></script>

@@ -95,7 +95,7 @@ class CartController extends Controller
             return back();
         }
     }
-    public function charge(Request $request)
+     public function charge(Request $request)
     {
 
         $charge = Stripe::charges()->create([
@@ -107,12 +107,15 @@ class CartController extends Controller
         $chargeId = $charge['id'];
 
         if ($chargeId) {
-
-
             // save order in orders table ...
-
             auth()->user()->orders()->create([
                 'cart' => serialize(session()->get('cart'))
+            ]);
+
+            $request->validate([
+                'address' => 'required|min:5|string',
+                'postal' => 'required|min:5||numeric',
+                'phone' => 'required|regex:/(01)[0-9]{9}/'
             ]);
 
             $info = Info::create([
@@ -123,13 +126,9 @@ class CartController extends Controller
             ]);
 
             $info->save();
-
-
-
             session()->forget('cart');
-            // Mail::to(auth::user()->email)->send(new PurchaseSuccessful());
-
-            return redirect()->route('home')->with('toast_success', " Payment was done. Thanks");
+            Mail::to(auth::user()->email)->send(new PurchaseSuccessful());
+            return redirect()->route('home')->with('success', " Payment was done. Thanks");
         } else {
             return redirect()->back();
         }

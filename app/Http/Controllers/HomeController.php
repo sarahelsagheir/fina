@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use App\Book;
 use Illuminate\Http\Request;
 
@@ -26,6 +25,7 @@ class HomeController extends Controller
     {
         return view('chat.index');
     }
+
     public function search(Request $request)
     {
     	if($request->has('search')){
@@ -35,7 +35,6 @@ class HomeController extends Controller
     	}
 
 
-    	return view('search.results', compact('products'));
+    	return view('results', compact('products'));
     }
-
 }

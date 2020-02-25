@@ -7,14 +7,40 @@
     <meta name="keywords" content="Fashi, unica, creative, html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Open Book</title>
+    <title>BOOKIE</title>
 
     <!-- Google Font -->
+    <link href='https://fonts.googleapis.com/css?family=Sofia' rel='stylesheet'>
+
     <link href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
 
     <!-- Css Styles -->
     <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"> -->
 
+    <link rel="stylesheet" type="text/css" href="../fash/vendor/bootstrap/css/bootstrap.min.css">
+        <!--===============================================================================================-->
+        <link rel="stylesheet" type="text/css" href="../fash/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+        <!--===============================================================================================-->
+        <link rel="stylesheet" type="text/css" href="../fash/fonts/themify/themify-icons.css">
+        <!--===============================================================================================-->
+        <link rel="stylesheet" type="text/css" href="../fash/fonts/Linearicons-Free-v1.0.0/icon-font.min.css">
+        <!--===============================================================================================-->
+        <link rel="stylesheet" type="text/css" href="../fash/fonts/elegant-font/html-css/style.css">
+        <!--===============================================================================================-->
+        <link rel="stylesheet" type="text/css" href="../fash/vendor/animate/animate.css">
+        <!--===============================================================================================-->
+        <link rel="stylesheet" type="text/css" href="../fash/vendor/css-hamburgers/hamburgers.min.css">
+        <!--===============================================================================================-->
+        <link rel="stylesheet" type="text/css" href="../fash/vendor/animsition/css/animsition.min.css">
+        <!--===============================================================================================-->
+        <link rel="stylesheet" type="text/css" href="../fash/vendor/select2/select2.min.css">
+        <!--===============================================================================================-->
+        <link rel="stylesheet" type="text/css" href="../fash/vendor/slick/slick.css">
+        <!--===============================================================================================-->
+        <link rel="stylesheet" type="text/css" href="../fash/vendor/noui/nouislider.min.css">
+        <!--===============================================================================================-->
+        <link rel="stylesheet" type="text/css" href="../fash/css/util.css">
+        <link rel="stylesheet" type="text/css" href="../fash/css/main.css">
     <link rel="stylesheet" href="{{asset('fashi/css/bootstrap.min.css')}}" type="text/css">
     <link rel="stylesheet" href="{{asset('fashi/css/font-awesome.min.css')}}" type="text/css">
     <link rel="stylesheet" href="{{asset('fashi/css/themify-icons.css')}}" type="text/css">
@@ -36,19 +62,7 @@
     </div>
 
     <header>
-        <div class="header-top">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-3"><a href="#" class="web-url">www.bookstore.com</a></div>
-                    <div class="col-md-6">
-                        <h5>Free Shipping Over $99 + 3 Free Samples With Every Order</h5>
-                    </div>
-                    <div class="col-md-3">
-                        <span class="ph-number">Call : 800 1234 5678</span>
-                    </div>
-                </div>
-            </div>
-        </div>
+      
         <div class="main-menu">
             <div class="container">
                 @include('layouts.navbar')
@@ -64,15 +78,15 @@
                 <div class="col-md-12">
                     <div class="cart-table">
                     @if($wishlists->count())
-                        <table style="border: none; box-shadow: 4px 4px 8px 4px rgba(0, 0, 0, 0.2)">
-                            <thead>
+                        <table class="table-striped" style="border: none; box-shadow: 4px 4px 8px 4px rgba(0, 0, 0, 0.2)">
+                            <thead style="background: #074985">
                                 <tr>
-                                    <th>Image</th>
-                                    <th class="p-name">Book Name</th>
-                                    <th>Price</th>
-                                    <th>add to cart</th>
+                                    <th style="color: white">Image</th>
+                                    <th style="color: white" class="p-name">Book Name</th>
+                                    <th style="color: white">Price</th>
+                                    <th style="color: white">add to cart</th>
 
-                                    <th>delete</th>
+                                    <th style="color: white">delete</th>
 
                                 </tr>
                             </thead>
@@ -84,12 +98,24 @@
                                     <td class="cart-title first-row">
                                         <h5> {{ $product->book->title }}</h5>
                                     </td>
+                                   
                                     <td class="p-price first-row">{{ $product->book->price }} L.E</td>
+                                    @if(!empty($product->book->price)) 
                                     <td class="p-price first-row">
+
                                         <div class="quantity">
-                                            <a href="{{route('cart.add',$product->book->id)}}" style="display: inline" class="btn"><i class="fa fa-shopping-cart"></i></a>
+                                            <a href="{{route('cart.add',$product->id)}}" style="display: inline" class="btn"><i class="fa fa-shopping-cart"></i></a>
                                         </div>
+                                      
                                     </td>
+                                    @else
+                                    <td class="p-price first-row">
+                                    <a href="{{'/borrow/'.$product->id.'/'.$product->book->user_id}}" class="flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4 btn">
+                                                Borrow
+                                            </a>
+                                  
+                                    </td>
+                                    @endif
 
 
                                     <td class="close-td first-row">
@@ -159,16 +185,17 @@
                         <h3>Quick Contact us</h3>
                         <h6>We are now offering some good discount
                             on selected books go and shop them</h6>
-                        <form>
+                            <form method="POST" action="{{url('/contact_us')}}">
+                            @csrf
                             <div class="row">
                                 <div class="col-md-6">
-                                    <input placeholder="Name" required>
+                                    <input placeholder="Name" name="name" required>
                                 </div>
                                 <div class="col-md-6">
-                                    <input type="email" placeholder="Email" required>
+                                    <input type="email" placeholder="Email" name="email" required>
                                 </div>
                                 <div class="col-md-12">
-                                    <textarea placeholder="Messege"></textarea>
+                                    <textarea placeholder="Messege" name="msg"></textarea>
                                 </div>
                                 <div class="col-md-12">
                                     <button class="btn black">Alright, Submit</button>
@@ -179,24 +206,7 @@
                 </div>
             </div>
         </div>
-        <div class="copy-right">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-6">
-                        <h5>(C) 2017. All Rights Reserved. BookStore Wordpress Theme</h5>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="share align-middle">
-                            <span class="fb"><i class="fa fa-facebook-official"></i></span>
-                            <span class="instagram"><i class="fa fa-instagram"></i></span>
-                            <span class="twitter"><i class="fa fa-twitter"></i></span>
-                            <span class="pinterest"><i class="fa fa-pinterest"></i></span>
-                            <span class="google"><i class="fa fa-google-plus"></i></span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+       
     </footer>
 
 

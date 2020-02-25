@@ -8,7 +8,6 @@ use Illuminate\Foundation\Auth\User;
 use App\Notifications\BorrowRequest;
 
 use App\Borrower;
-use App\Notifications\AdminNotification;
 use App\Notifications\ApproveNotification;
 use App\Notifications\DisapprovedNotification;
 
@@ -21,13 +20,13 @@ function borrowRequest($product, $id)
 {
    $id=AppUser::find($id);
    $product=book::find($product);
-$id->notify(new BorrowRequest($id,$product)); 
-return back();       
+$id->notify(new BorrowRequest($id,$product));
+return back();
 }
  function approveNotification($id ,$product ){
   $id=AppUser::find($id);
   $product=book::find($product);
-  
+
   if($product) {
     $product->status = '0';
     $product->save();
@@ -37,7 +36,7 @@ return back();
     ]);
 $borrower->save();
 }
- 
+
  $id->notify(new approveNotification($id,$product));
  return redirect('/home');
 
@@ -48,22 +47,15 @@ $borrower->save();
       $book->status = '1';
       $book->save();
   }
-  
-  return redirect('/rateBorrower/'.$product);
+  return redirect(route('user.rate.create',$product));
 }
  function disapprovedNotification($user){
 
     $user=AppUser::find($user);
-    
+
     $user->notify(new DisapprovedNotification($user));
     return back();
-}    
-//  function didnotRecievedNotification($user){
-//   $user=AppUser::find(3);
-  
+}
 
-//   $user->notify(new AdminNotification($user));
-
-// }    
 
 }

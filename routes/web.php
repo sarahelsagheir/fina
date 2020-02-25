@@ -11,21 +11,23 @@
 |
 */
 
-Route::get('/','LandingBageController@index');
+Route::get('/', 'LandingBageController@index');
 
 Auth::routes(['verify' => true]);
 
 Route::get('/home', 'BookController@index')->name('home');
 Route::get('/view/{id}', 'BookController@view')->name('book.view');
 
-Route::get("search","HomeController@search");
+Route::post('/contact', 'Admin\AdminContactController@store')->name('contact.store');
+
+
 
 Route::get('/profile', 'ProfileController@profile')->name('profile');
 Route::get('/changePassword', 'ProfileController@changePasswordForm')->name('changePassword');
 Route::post('/changePassword', 'ProfileController@changePassword')->name('changePassword');
 Route::get('/profilePicture', 'ProfileController@getProfileAvatar')->name('profileAvatar');
 Route::post('/profilePicture', 'ProfileController@profilePictureUpload')->name('profileAvatar');
-// Route::get('/addBook', 'ProfileController@getBookForm')->name('addBook');
+Route::get('/addBook', 'ProfileController@getBookForm')->name('addBook');////////////
 Route::post('/addBook', 'ProfileController@addBook')->name('addBook');
 
 Route::get('/Books', 'ProfileController@getBooks')->name('books');
@@ -52,29 +54,32 @@ Route::get('login/twitter', 'Auth\LoginController@redirectToTwitter');
 Route::get('login/twitter/callback', 'Auth\LoginController@handleTwitterCallback');
 
 
-Route::get('invoice/{amount}','CartController@generatePDF')->name('invoice');
+Route::get('invoice/{amount}', 'CartController@generatePDF')->name('invoice');
 
 Route::resource('/wishlist', 'WishlistController', ['except' => ['create', 'edit', 'show', 'update']]);
 
-
 // chat
 Route::get('/chat', 'HomeController@index')->name('chat');
-Route::get('/contacts', 'ContactsController@get');
+Route::get('/contacts', 'ContactsController@normalget');
+Route::get('/contact', 'ContactsController@get');
+
+// Route::get('/contacts', 'ContactsController@normalget');
 Route::get('/conversation/{id}', 'ContactsController@getMessagesFor');
 Route::post('/conversation/send', 'ContactsController@send');
 Route::post('/conversation/send/{id}', 'ContactsController@sendMessage')->name('send.message');
 
 
-// rate 
+// rate
 Route::get('/showRate/{user}', 'RateController@rateNotification')->name('rateNotification')->middleware('auth');
 Route::get('/rateUser/{user}', 'RateController@rateUser')->name('rateUser')->middleware('auth');
 Route::post('/rateUser/{user}', 'RateController@rateShow')->name('rateShow')->middleware('auth');
-Route::get('/rateBorrower/{user}', 'RateController@rateBorrower')->name('rateBorrower')->middleware('auth');
+Route::get('/rateBorrower/{user}', 'RateController@rateBorrower')->name('rateBorrower');
+Route::resource('user.rate', 'RateController')->shallow();
 
 //------------------------------------------------------------------------------------------------------------
 
-route::get('/approveNotification/{id}/{product}','NotificationController@approveNotification')->name('approve.notification');
-route::get('/disapproveNotification/{id}','NotificationController@disapprovedNotification')->name('disapprove.notification');
+route::get('/approveNotification/{id}/{product}', 'NotificationController@approveNotification')->name('approve.notification');
+route::get('/disapproveNotification/{id}', 'NotificationController@disapprovedNotification')->name('disapprove.notification');
 
 Route::get('/borrow', 'ProductController@borrowIndex')->name('borrow.index')->middleware('auth');
 Route::get('/borrow/{product}/{id}', 'NotificationController@borrowRequest')->name('borrow.request')->middleware('auth');
@@ -83,4 +88,85 @@ Route::get('/borrow/{product}/{id}', 'NotificationController@borrowRequest')->na
 Route::get('/sharedBook', 'ProductController@sharedBook')->name('sharedBook')->middleware('auth');
 Route::get('/sharedBook/recieved/{product}', 'NotificationController@recievedBook')->name('recievedBook')->middleware('auth');
 
+Route::get("search","HomeController@search");
 
+
+// __________________________________ Admin____________________________ //
+
+
+
+Route::prefix('admin')->middleware('role:admin', 'auth')->group(function () {
+
+
+    Route::get('/', 'Admin\AdminController@index')->name('admin.index');
+
+    //create category
+    Route::resource('/category', 'Admin\AdminCategoriesController');
+
+    //manage slider
+    Route::resource('/slider', 'Admin\AdminSlidersController');
+    Route::post('/delete/slider', 'Admin\AdminSlidersController@deleteSlider');
+
+
+    // manage books
+    Route::get('/users/createBookStore', 'Admin\AdminUserController@create')->name('users.create');
+    Route::post('/users', 'Admin\AdminUserController@store')->name('users.store');
+    Route::resource('/book', 'Admin\AdminBooksController');
+    Route::get('search', 'Admin\AdminController@mysearch');
+
+
+
+
+
+    //manage user
+    Route::get('users/{id}/user', 'Admin\AdminUserController@ban')->name('users.ban');
+    Route::get('/{id}/user', 'Admin\AdminUserController@revoke')->name('users.revoke');
+
+    Route::get('/users', 'Admin\AdminUserController@users')->name('users-control');
+    Route::post('/delete/users', 'Admin\AdminUserController@delete');
+    Route::get('user/search', 'Admin\AdminUserController@userSearch')->name('user.search');
+
+
+
+
+
+    // //searching
+    // Route::get('/search/{id}', ['as'=>'search', 'uses'=>'Admin\AdminController@singleSearch']);
+     Route::post('/search', 'Admin\AdminController@search')->name('books.search')
+;
+
+
+    //users contact
+    Route::get('/contact', 'Admin\AdminContactController@index');
+    Route::post('/delete/messages', 'Admin\AdminContactController@delete');
+
+
+
+
+    //admin Profile
+    Route::get('/profile/{id}', 'Admin\ProfileController@index')->name('profile');
+    Route::get('/profile/{id}/edit', 'Admin\ProfileController@edit')->name('profile.edit');
+    Route::patch('/profile/update/{id}', 'Admin\ProfileController@update')->name('profile.update');
+
+
+    //borrowers
+    Route::get('/borrowers', 'AdminBorrowersController@borrower')->name('borrowers');
+    Route::post('/sms', 'Admin\AdminSmsController@sms')->name('sms');
+
+
+    //ChartJS
+    Route::get('/books-ratio', 'Admin\AdminController@getBooksRation')->name('books-ratio');
+    Route::get('/orders-ratio', 'Admin\AdminController@getOrdersRation')->name('orders-ratio');
+
+
+    //search Orders
+    Route::get('/order', 'Admin\AdminOrderController@index');
+    Route::post('/order/search', 'Admin\AdminOrderController@order')->name('order');
+
+    //chat
+    Route::get('/chat', 'Admin\AdminChatController@index');
+
+
+
+
+});

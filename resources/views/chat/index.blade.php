@@ -1,8 +1,6 @@
 @extends('layouts.app')
 @section('styles')
 <style>
-   
-
     * {
         -webkit-box-sizing: border-box;
         -moz-box-sizing: border-box;
@@ -26,10 +24,10 @@
     }
 
 
-    main{
+    main {
         background: white
     }
-  
+
     .navbar {
         padding: 0;
         /* background: #eee;; */
@@ -102,41 +100,40 @@
         margin-top: 2px !important;
     }
 
-    .navbar textarea{
-    width: 85%;
-	border: none;
-	border-radius: 20px;
-	outline: none;
-	padding: 10px;
-	font-family: 'Sniglet', cursive;
-	font-size: 1em;
-	color: #676767;
-	transition: border 0.5s;
-	-webkit-transition: border 0.5s;
-	-moz-transition: border 0.5s;
-	-o-transition: border 0.5s;
-	/* border: solid 3px #98d4f3;	 */
-	-webkit-box-sizing:border-box;
-	-moz-box-sizing:border-box;
-    box-sizing:border-box;
-    height: 50px;	
-	resize: none; 
-   
-   
-    overflow: auto;
-    background: white
+    .navbar textarea {
+        width: 85%;
+        border: none;
+        border-radius: 20px;
+        outline: none;
+        padding: 10px;
+        font-family: 'Sniglet', cursive;
+        font-size: 1em;
+        color: #676767;
+        transition: border 0.5s;
+        -webkit-transition: border 0.5s;
+        -moz-transition: border 0.5s;
+        -o-transition: border 0.5s;
+        /* border: solid 3px #98d4f3;	 */
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+        height: 50px;
+        resize: none;
 
-}
 
-.navbar button.notify{
-    border: none;
-    background: blue;
-    color: black;
-    border-radius: 50%;
-    margin-left: 10px;
-    width: 30px;
-    height: 30px;
-}
+        overflow: auto;
+        background: white
+    }
+
+    .navbar button.notify {
+        border: none;
+        background: blue;
+        color: black;
+        border-radius: 50%;
+        margin-left: 10px;
+        width: 30px;
+        height: 30px;
+    }
 
     header .cart .quntity {
         font-size: 9px;
@@ -156,27 +153,27 @@
 @section('content')
 
 <div class="container">
-<header>
-   
-    @include('layouts.navbar')
-</header>
+    <header>
 
-    <div class="row justify-content-center" >
-        <div class="col-sm-12" >
+        @include('layouts.navbar')
+    </header>
+
+    <div class="row justify-content-center">
+        <div class="col-sm-12">
             <chat-app :user="{{ auth()->user() }}"></chat-app>
         </div>
     </div>
 </div>
-<footer>
+<footer class="p-2">
         <div class="container">
             <div class="row">
-                <div class="col-md-4">
+                <div class="col-md-4" style="font-size: 16px">
                     <div class="address">
-                        <h4>Our Address</h4>
-                        <h6>The BookStore Theme, 4th Store
+                        <h4 >Our Address</h4>
+                        <h6  style="font-size: 16px">The BookStore Theme, 4th Store
                             Beside that building, USA</h6>
-                        <h6>Call : 800 1234 5678</h6>
-                        <h6>Email : info@bookstore.com</h6>
+                        <h6  style="font-size: 16px">Call : 800 1234 5678</h6>
+                        <h6  style="font-size: 16px">Email : info@bookstore.com</h6>
                     </div>
                     <div class="timing">
                         <h4>Timing</h4>
@@ -189,19 +186,17 @@
                     <div class="navigation">
                         <h4>Navigation</h4>
                         <ul>
-                            <li><a href="index.html">Home</a></li>
-                            <li><a href="about.html">About Us</a></li>
-                            <li><a href="privacy-policy.html">Privacy Policy</a></li>
-                            <li><a href="terms-conditions.html">Terms</a></li>
-                            <li><a href="products.html">Products</a></li>
+                            <li><a href="index.html"  style="font-size: 16px">Home</a></li>
+                            <li><a href="#about" style="font-size: 16px">About Us</a></li>
+                            <li><a href="products.html" style="font-size: 16px">Products</a></li>
                         </ul>
                     </div>
                     <div class="navigation">
                         <h4>Help</h4>
                         <ul>
-                            <li><a href="#">Shipping & Returns</a></li>
-                            <li><a href="privacy-policy.html">Privacy</a></li>
-                            <li><a href="#">FAQ’s</a></li>
+                            <li><a href="#"  style="font-size: 16px">Shipping & Returns</a></li>
+                            <li><a href="privacy-policy.html"  style="font-size: 16px">Privacy</a></li>
+                            <li><a href="#"  style="font-size: 16px">FAQ’s</a></li>
                         </ul>
                     </div>
                 </div>
@@ -210,16 +205,17 @@
                         <h3>Quick Contact us</h3>
                         <h6>We are now offering some good discount
                             on selected books go and shop them</h6>
-                        <form>
+                            <form method="POST" action="{{url('/contact_us')}}">
+                            @csrf
                             <div class="row">
                                 <div class="col-md-6">
-                                    <input placeholder="Name" required>
+                                    <input placeholder="Name" name="name" required>
                                 </div>
                                 <div class="col-md-6">
-                                    <input type="email" placeholder="Email" required>
+                                    <input type="email" placeholder="Email" name="email" required>
                                 </div>
                                 <div class="col-md-12">
-                                    <textarea placeholder="Messege"></textarea>
+                                    <textarea placeholder="Messege" name="msg"></textarea>
                                 </div>
                                 <div class="col-md-12">
                                     <button class="btn black">Alright, Submit</button>
@@ -230,24 +226,7 @@
                 </div>
             </div>
         </div>
-        <div class="copy-right">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-6">
-                        <h5>(C) 2017. All Rights Reserved. BookStore Wordpress Theme</h5>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="share align-middle">
-                            <span class="fb"><i class="fa fa-facebook-official"></i></span>
-                            <span class="instagram"><i class="fa fa-instagram"></i></span>
-                            <span class="twitter"><i class="fa fa-twitter"></i></span>
-                            <span class="pinterest"><i class="fa fa-pinterest"></i></span>
-                            <span class="google"><i class="fa fa-google-plus"></i></span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        
     </footer>
 
 

@@ -7,13 +7,23 @@
     <meta name="keywords" content="Fashi, unica, creative, html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Open Book</title>
+    <title>BOOKIE</title>
+    <link href='https://fonts.googleapis.com/css?family=Sofia' rel='stylesheet'>
 
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
 
     <!-- Css Styles -->
     <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"> -->
+    <link href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
+
+<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.css" rel="stylesheet">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-star-rating/4.0.2/css/star-rating.min.css" />
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-star-rating/4.0.2/js/star-rating.min.js"></script>
 
     <link rel="stylesheet" href="{{asset('fashi/css/bootstrap.min.css')}}" type="text/css">
     <link rel="stylesheet" href="{{asset('fashi/css/font-awesome.min.css')}}" type="text/css">
@@ -51,6 +61,8 @@
         .StripeElement--webkit-autofill {
             background-color: #fefde5 !important;
         }
+
+       
     </style>
 
 </head>
@@ -62,19 +74,7 @@
     </div>
 
     <header>
-        <div class="header-top">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-3"><a href="#" class="web-url">www.bookstore.com</a></div>
-                    <div class="col-md-6">
-                        <h5>Free Shipping Over $99 + 3 Free Samples With Every Order</h5>
-                    </div>
-                    <div class="col-md-3">
-                        <span class="ph-number">Call : 800 1234 5678</span>
-                    </div>
-                </div>
-            </div>
-        </div>
+      
         <div class="main-menu">
             <div class="container">
                 @include('layouts.navbar')
@@ -103,39 +103,15 @@
             </div>
         @endif
         <div class="row">
-            <!-- <div class="col-md-5">
-                <p class="mby-3 p-2" style="background: #074985;color:white;">
-                    Total Amount is <strong>{{ $amount ?? ''}} L.E</strong>
-                </p>
-
-                <form action="/charge" method="post" id="payment-form">
-                    @csrf
-                    <div class="">
-                        <input type="hidden" name="amount" value="{{ $amount ?? ''}}">
-                        <h5 for="card-element">
-                            Credit or debit card
-                        </h5>
-                        <div id="card-element">
-                        </div>
-
-                        <div id="card-errors" role="alert"></div>
-                    </div>
-                    <button class="btn my-3" style="background: #074985;color:white;">Submit Payment</button>
-                    <p id="loading" style="display:none;"> Payment is in process . please wait...</p>
-
-                </form>
-            </div> -->
+           
             <div class="col-md-6">
-                <div class="checkout-form">
+                <div class="checkout-form" style="height: 500px">
                     <div class="place-order">
                         <h4>Billing Info</h4>
                         <div class="order-total"  style="border: none; box-shadow: 2px 4px 8px 4px rgba(0, 0, 0, 0.2);">
                             <form action="/charge" method="post" class="checkout-form" id="payment-form">
                                 @csrf
-                                <!-- <div class="form-group">
-                                    <label for="email">Email Address</label>
-                                    <input type="email" class="form-control" id="email" name="email" value="{{ auth()->user()->email }}" readonly>
-                                </div> -->
+                                
                                 <div class="form-group">
                                     <label for="address">Address</label>
                                     <input type="text" class="form-control" id="address" name="address" value="{{ old('address') }}" required>
@@ -178,7 +154,7 @@
                 <div class="checkout-form">
                     <div class="place-order">
                         <h4 class="">Your Order</h4>
-                        <div class="order-total"  style="border: none; box-shadow: 2px 4px 8px 4px rgba(0, 0, 0, 0.2);">
+                        <div class="order-total"  style="border: none; box-shadow: 2px 4px 8px 4px rgba(0, 0, 0, 0.2); height:460px">
                             <ul class="order-table">
                                 <li>Product <span>Quantity</span></li>
                                 @foreach( $cart->items as $product)
@@ -243,16 +219,16 @@
                         <h3>Quick Contact us</h3>
                         <h6>We are now offering some good discount
                             on selected books go and shop them</h6>
-                        <form>
-                            <div class="row">
+                            <form>
+                              <div class="row">
                                 <div class="col-md-6">
-                                    <input placeholder="Name" required>
+                                    <input placeholder="Name" name="name" required>
                                 </div>
                                 <div class="col-md-6">
-                                    <input type="email" placeholder="Email" required>
+                                    <input type="email" placeholder="Email" name="email" required>
                                 </div>
                                 <div class="col-md-12">
-                                    <textarea placeholder="Messege"></textarea>
+                                    <textarea placeholder="Messege" name="msg"></textarea>
                                 </div>
                                 <div class="col-md-12">
                                     <button class="btn black">Alright, Submit</button>
@@ -263,24 +239,7 @@
                 </div>
             </div>
         </div>
-        <div class="copy-right">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-6">
-                        <h5>(C) 2017. All Rights Reserved. BookStore Wordpress Theme</h5>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="share align-middle">
-                            <span class="fb"><i class="fa fa-facebook-official"></i></span>
-                            <span class="instagram"><i class="fa fa-instagram"></i></span>
-                            <span class="twitter"><i class="fa fa-twitter"></i></span>
-                            <span class="pinterest"><i class="fa fa-pinterest"></i></span>
-                            <span class="google"><i class="fa fa-google-plus"></i></span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+       
     </footer>
 
 

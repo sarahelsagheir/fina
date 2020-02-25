@@ -19,6 +19,8 @@ class CreateBorrowersTable extends Migration
             $table->bigInteger('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('book_id')->references('id')->on('books');
+            $table->integer('issue_interval')->default(10);
+
            
             $table->timestamps();
         });

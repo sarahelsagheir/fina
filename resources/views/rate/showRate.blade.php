@@ -1,8 +1,7 @@
 @extends('layouts.app')
 @section('styles')
 <style>
-
-* {
+    * {
         -webkit-box-sizing: border-box;
         -moz-box-sizing: border-box;
         box-sizing: border-box;
@@ -25,10 +24,10 @@
     }
 
 
-    main{
+    main {
         background: white
     }
-  
+
     .navbar {
         padding: 0;
         /* background: #eee;; */
@@ -114,97 +113,97 @@
         color: #fff;
         padding: 1px 0;
     }
-.card {
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-  max-width: 300px;
-  margin: auto;
-  text-align: center;
-  margin: 50px auto;
-}
 
-.navbar textarea{
-    width: 85%;
-	border: none;
-	border-radius: 20px;
-	outline: none;
-	padding: 10px;
-	font-family: 'Sniglet', cursive;
-	font-size: 1em;
-	color: #676767;
-	transition: border 0.5s;
-	-webkit-transition: border 0.5s;
-	-moz-transition: border 0.5s;
-	-o-transition: border 0.5s;
-	/* border: solid 3px #98d4f3;	 */
-	-webkit-box-sizing:border-box;
-	-moz-box-sizing:border-box;
-    box-sizing:border-box;
-    height: 50px;	
-	resize: none; 
-    overflow: auto;
-    background: white
+    .card {
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+        max-width: 300px;
+        margin: auto;
+        text-align: center;
+        margin: 50px auto;
+    }
 
-}
+    .navbar textarea {
+        width: 85%;
+        border: none;
+        border-radius: 20px;
+        outline: none;
+        padding: 10px;
+        font-family: 'Sniglet', cursive;
+        font-size: 1em;
+        color: #676767;
+        transition: border 0.5s;
+        -webkit-transition: border 0.5s;
+        -moz-transition: border 0.5s;
+        -o-transition: border 0.5s;
+        /* border: solid 3px #98d4f3;	 */
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+        height: 50px;
+        resize: none;
+        overflow: auto;
+        background: white
+    }
 
-.navbar button.notify{
-    border: none;
-    background: blue;
-    color: black;
-    border-radius: 50%;
-    margin-left: 10px;
-    width: 30px;
-    height: 30px;
-}
+    .navbar button.notify {
+        border: none;
+        background: blue;
+        color: black;
+        border-radius: 50%;
+        margin-left: 10px;
+        width: 30px;
+        height: 30px;
+    }
 
-.title {
-  /* color: grey; */
-  /* font-size: 18px; */
-  margin: 10px 0;
-  text-transform: capitalize
-}
+    .title {
+        /* color: grey; */
+        /* font-size: 18px; */
+        margin: 10px 0;
+        text-transform: capitalize
+    }
 
-/* input{
+    /* input{
     display: block;
     width:50%;
     margin: 5px 10px;
 } */
 
 
-button {
-  border: none;
-  outline: 0;
-  display: inline-block;
-  padding: 8px;
-  color: white;
-  text-align: center;
-  cursor: pointer;
-  width: 100%;
-  font-size: 18px;
-}
+    button {
+        border: none;
+        outline: 0;
+        display: inline-block;
+        padding: 8px;
+        color: white;
+        text-align: center;
+        cursor: pointer;
+        width: 100%;
+        font-size: 18px;
+    }
 
 
-button:hover, a:hover {
-  opacity: 0.7;
-}
-
+    button:hover,
+    a:hover {
+        opacity: 0.7;
+    }
 </style>
 @endsection
 
 
 @section('content')
 <div class="container">
-<header>
-   
-    @include('layouts.navbar')
-</header>
-<div class="card">
-  <img src="{{asset($user->cover)}}" alt="John" style="width:100%">
-  <h3 class="title">{{ $user->name }}</h3>
-  <input id="input-1" name="input-1" class="rating rating-loading" data-min="0" data-max="5" data-step="0.1" value="{{ $user->averageRating }}" data-size="xs" disabled="">
- 
-  
-  <!-- <p><button>Contact</button></p> -->
-</div>
+    <header>
+
+        @include('layouts.navbar')
+    </header>
+    <div class="card">
+        <img src="{{asset($user->cover)}}" alt="John" style="width:100%">
+        <h3 class="title">{{ $user->name }}</h3>
+        <input id="input-1" name="input-1" class="rating rating-loading" data-min="0" data-max="5" data-step="0.1" value="{{ $user->averageRating }}" data-size="xs" disabled="">
+
+
+        <!-- <p><button>Contact</button></p> -->
+    </div>
 </div>
 
 <footer>
@@ -250,16 +249,17 @@ button:hover, a:hover {
                     <h3>Quick Contact us</h3>
                     <h6>We are now offering some good discount
                         on selected books go and shop them</h6>
-                    <form>
+                        <form method="POST" action="{{url('/contact_us')}}">
+                            @csrf
                         <div class="row">
                             <div class="col-md-6">
-                                <input placeholder="Name" required>
+                                <input placeholder="Name" name="name" required>
                             </div>
                             <div class="col-md-6">
-                                <input type="email" placeholder="Email" required>
+                                <input type="email" placeholder="Email" name="email" required>
                             </div>
                             <div class="col-md-12">
-                                <textarea placeholder="Messege"></textarea>
+                                <textarea placeholder="Messege" name="msg"></textarea>
                             </div>
                             <div class="col-md-12">
                                 <button class="btn black">Alright, Submit</button>
@@ -292,10 +292,9 @@ button:hover, a:hover {
 
 
 <script type="text/javascript">
-$(document).ready(function(){
-    $("#input-id").rating();
-});
+    $(document).ready(function() {
+        $("#input-id").rating();
+    });
 </script>
 
 @endsection
-

@@ -11,7 +11,10 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\Book::class,20)->create();
+        // factory(App\Book::class,20)->create();
         // $this->call(UsersTableSeeder::class);
+        $this->call(LaratrustSeeder::class);
+        $this->call(CategoryTableSedeer::class);
+        $this->call(BooksTableSedeer::class);
     }
 }
