@@ -10,6 +10,10 @@ use willvincent\Rateable\Rating;
 
 class RateController extends Controller
 {
+    function __construct() {
+        $this->middleware('auth');
+    }
+
     //auth user rate
     public function index($id){
         $user = User::find($id);
